@@ -1,7 +1,7 @@
 {
   "description": "glusterFS plugin for Docker",
   "documentation": "https://github.com/jrussek/docker-volume-glusterfs",
-  "entrypoint": ["/docker-volume-glusterfs"],
+  "entrypoint": ["docker-volume-glusterfs"],
   "env": [
     {
       "name": "DEBUG",
