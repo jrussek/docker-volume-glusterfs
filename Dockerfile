@@ -14,6 +14,6 @@ RUN apt-get update \
   && apt-get purge software-properties-common -y \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /go/bin/docker-volume-glusterfs .
+COPY --from=builder /go/bin/docker-volume-glusterfs /bin/
 CMD ["docker-volume-glusterfs"]
 
