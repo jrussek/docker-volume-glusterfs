@@ -1,13 +1,18 @@
 module github.com/jrussek/docker-volume-glusterfs
 
-go 1.15
+go 1.20
 
 require (
-	github.com/Microsoft/go-winio v0.4.16 // indirect
-	github.com/coreos/go-systemd v0.0.0-20170731111925-d21964639418 // indirect
-	github.com/docker/go-connections v0.3.0 // indirect
-	github.com/docker/go-plugins-helpers v0.0.0-20170817192157-a9ef19c479cb
-	github.com/sirupsen/logrus v1.4.1
-	golang.org/x/net v0.0.0-20170809000501-1c05540f6879 // indirect
-	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
+	github.com/docker/go-plugins-helpers v0.0.0-20211224144127-6eecb7beb651
+	github.com/sirupsen/logrus v1.9.2
+)
+
+require (
+	github.com/Microsoft/go-winio v0.6.1 // indirect
+	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
+	github.com/docker/go-connections v0.4.0 // indirect
+	golang.org/x/mod v0.10.0 // indirect
+	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/sys v0.8.0 // indirect
+	golang.org/x/tools v0.9.1 // indirect
 )
