@@ -13,10 +13,9 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
-      - checkout
       - setup_remote_docker:
-        version: 20.10.14
-        docker_layer_caching: true
+          version: 20.10.14
+      - checkout
       - run: docker buildx --platform linux/amd64,linux/arm/v7,linux/arm64 build .
 
 # Orchestrate jobs using workflows
