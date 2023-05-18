@@ -22,8 +22,8 @@ jobs:
           version: 20.10.14
       - checkout
       - run: docker buildx create --use
-      - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-      - run: docker buildx build --push --tag "$DOCKERHUB_USERNAME"/latest --platform linux/amd64,linux/arm/v7,linux/arm64 .
+      - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+      - run: docker buildx build --push --tag "$DOCKERHUB_USERNAME"/"CIRCLE_PROJECT_REPONAME":latest --platform linux/amd64,linux/arm/v7,linux/arm64 .
 
 
 # Orchestrate jobs using workflows
@@ -32,11 +32,11 @@ workflows:
   docker_build:
     jobs:
       - build-images:
-        filters:
-          branches:
-            ignore: master
+          filters:
+            branches:
+              ignore: master
       - build-and-push:
-        filters:
-          branches:
-            only: master
+          filters:
+            branches:
+              only: master
 
