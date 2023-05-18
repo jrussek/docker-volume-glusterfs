@@ -8,7 +8,7 @@ CMD ["/go/bin/docker-volume-glusterfs"]
 FROM ubuntu:20.04
 RUN apt-get update \
   && apt-get install software-properties-common -y \
-  && add-apt-repository ppa:gluster/glusterfs-9 \
+  && add-apt-repository ppa:gluster/glusterfs-10 \
   && apt-get update \
   && apt-get install glusterfs-client -y \
   && apt-get purge software-properties-common -y \
