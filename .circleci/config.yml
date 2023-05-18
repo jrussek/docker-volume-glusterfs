@@ -22,7 +22,7 @@ jobs:
           version: 20.10.14
       - checkout
       - run: docker buildx create --use
-      - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login -u "$DOCKERHUB_USERNAME"
+      - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
       - run: docker buildx build --push --tag "$DOCKERHUB_USERNAME"/latest --platform linux/amd64,linux/arm/v7,linux/arm64 .
 
 
