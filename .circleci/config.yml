@@ -11,8 +11,9 @@ jobs:
     steps:
       - setup_remote_docker:
           version: 20.10.14
+          docker_layer_caching: true
       - checkout
-      - run: docker buildx create --use
+      - run: docker buildx create --use --name "$CIRCLE_PROJECT_REPONAME"
       - run: docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64 .
   build-and-push:
     docker:
@@ -20,10 +21,11 @@ jobs:
     steps:
       - setup_remote_docker:
           version: 20.10.14
+          docker_layer_caching: true
       - checkout
-      - run: docker buildx create --use
+      - run: docker buildx create --use --name "$CIRCLE_PROJECT_REPONAME"
       - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
-      - run: docker buildx build --push --tag "$DOCKERHUB_USERNAME"/"CIRCLE_PROJECT_REPONAME":latest --platform linux/amd64,linux/arm/v7,linux/arm64 .
+      - run: docker buildx build --push --tag "$DOCKERHUB_USERNAME/$CIRCLE_PROJECT_REPONAME":latest --platform linux/amd64,linux/arm/v7,linux/arm64 .
 
 
 # Orchestrate jobs using workflows
@@ -36,6 +38,7 @@ workflows:
             branches:
               ignore: master
       - build-and-push:
+          context: dockerhub
           filters:
             branches:
               only: master
