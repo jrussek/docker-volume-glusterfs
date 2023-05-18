@@ -6,18 +6,28 @@ version: 2.1
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   build-images:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
       - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - setup_remote_docker:
           version: 20.10.14
       - checkout
       - run: docker buildx create --use
-      - run: docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64 .
+      - run: docker buildx build \
+        --platform linux/amd64,linux/arm/v7,linux/arm64 .
+  build-and-push:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - setup_remote_docker:
+          version: 20.10.14
+      - checkout
+      - run: docker buildx create --use
+      - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login -u "$DOCKERHUB_USERNAME"
+      - run: docker buildx build --push \
+        --tag "$DOCKERHUB_USERNAME"/latest \
+        --platform linux/amd64,linux/arm/v7,linux/arm64 .
+
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -25,3 +35,11 @@ workflows:
   docker_build:
     jobs:
       - build-images
+        filters:
+          branches:
+            ignore: master
+      - build-and-push
+        filters
+          branches:
+            only: master
+
