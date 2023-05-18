@@ -59,12 +59,12 @@ For additional options see [man mount.glusterfs](https://github.com/gluster/glus
 ## Supported tags and respective `Dockerfile` links
 
 - jorussek/glusterfs:latest -> jorussek/glusterfs:9
-- [jorussek/glusterfs:9](https://github.com/jorussek/docker-volume-glusterfs/blob/glusterfs-9/Dockerfile) (Ubuntu 20.04)
-- [jorussek/glusterfs:8](https://github.com/jorussek/docker-volume-glusterfs/blob/glusterfs-8/Dockerfile) (Ubuntu 20.04)
-- [jorussek/glusterfs:7](https://github.com/jorussek/docker-volume-glusterfs/blob/glusterfs-7/Dockerfile) (Ubuntu 20.04)
-- [jorussek/glusterfs:6](https://github.com/jorussek/docker-volume-glusterfs/blob/glusterfs-6/Dockerfile) (Ubuntu 20.04)
-- [jorussek/glusterfs:1.1.0](https://github.com/jorussek/docker-volume-glusterfs/blob/4af73f9ba63e816958f25a2bddf5665f6c859fe9/Dockerfile) (Ubuntu 18.04)
-- [jorussek/glusterfs:1.0.0](https://github.com/jorussek/docker-volume-glusterfs/blob/4af73f9ba63e816958f25a2bddf5665f6c859fe9/Dockerfile) (Ubuntu 18.04)
+- [jorussek/glusterfs:9](https://github.com/jrussek/docker-volume-glusterfs/blob/glusterfs-9/Dockerfile) (Ubuntu 20.04)
+- [jorussek/glusterfs:8](https://github.com/jrussek/docker-volume-glusterfs/blob/glusterfs-8/Dockerfile) (Ubuntu 20.04)
+- [jorussek/glusterfs:7](https://github.com/jrussek/docker-volume-glusterfs/blob/glusterfs-7/Dockerfile) (Ubuntu 20.04)
+- [jorussek/glusterfs:6](https://github.com/jrussek/docker-volume-glusterfs/blob/glusterfs-6/Dockerfile) (Ubuntu 20.04)
+- [jorussek/glusterfs:1.1.0](https://github.com/jrussek/docker-volume-glusterfs/blob/4af73f9ba63e816958f25a2bddf5665f6c859fe9/Dockerfile) (Ubuntu 18.04)
+- [jorussek/glusterfs:1.0.0](https://github.com/jrussek/docker-volume-glusterfs/blob/4af73f9ba63e816958f25a2bddf5665f6c859fe9/Dockerfile) (Ubuntu 18.04)
 
 ## TODO
 
