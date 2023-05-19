@@ -11,9 +11,6 @@ jobs:
         type: string
     docker:
       - image: cimg/base:stable
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - setup_remote_docker:
           version: 20.10.14
@@ -34,9 +31,6 @@ jobs:
         type: string
     docker:
       - image: cimg/base:stable
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - setup_remote_docker:
           version: 20.10.14
@@ -44,6 +38,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: plugin-<< parameters.arch >>
+      - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --password-stdin --username "$DOCKERHUB_USERNAME"
       - run: docker plugin create jorussek/glusterfs:<< parameters.arch >>-latest ./plugin-<< parameters.arch >>
       - run: docker plugin push jorussek/glusterfs:<< parameters.arch >>-latest
 
