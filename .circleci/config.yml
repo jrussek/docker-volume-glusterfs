@@ -45,7 +45,7 @@ jobs:
       - attach_workspace:
           at: plugin-<< parameters.arch >>
       - run: docker plugin create jorussek/glusterfs:<< parameters.arch >>-latest ./plugin-<< parameters.arch >>
-      - run: docker plugin push
+      - run: docker plugin push jorussek/glusterfs:<< parameters.arch >>-latest
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
