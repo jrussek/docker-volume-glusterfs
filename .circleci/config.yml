@@ -12,7 +12,7 @@ jobs:
     docker:
       - image: cimg/base:stable
         auth:
-          username: $DOCKERHUB_USRNAME
+          username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - setup_remote_docker:
@@ -35,7 +35,7 @@ jobs:
     docker:
       - image: cimg/base:stable
         auth:
-          username: $DOCKERHUB_USRNAME
+          username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - setup_remote_docker:
@@ -57,6 +57,8 @@ workflows:
           matrix:
             parameters:
               arch: ["amd64", "arm64", "arm/v7"]
+          context:
+            dockerhub
 
       - plugin-push:
           name: plugin-push-<< matrix.arch >>
@@ -68,3 +70,5 @@ workflows:
           filters:
             branches:
               only: master
+          context:
+            dockerhub
