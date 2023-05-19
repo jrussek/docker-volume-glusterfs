@@ -12,7 +12,7 @@ jobs:
     docker:
       - image: cimg/base:stable
         auth:
-          username: $DOCKERHUB_USRNAME
+          username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - setup_remote_docker:
@@ -35,7 +35,7 @@ jobs:
     docker:
       - image: cimg/base:stable
         auth:
-          username: $DOCKERHUB_USRNAME
+          username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - setup_remote_docker:
@@ -45,7 +45,7 @@ jobs:
       - attach_workspace:
           at: plugin-<< parameters.arch >>
       - run: docker plugin create jorussek/glusterfs:<< parameters.arch >>-latest ./plugin-<< parameters.arch >>
-      - run: docker plugin push
+      - run: docker plugin push jorussek/glusterfs:<< parameters.arch >>-latest
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -57,6 +57,8 @@ workflows:
           matrix:
             parameters:
               arch: ["amd64", "arm64", "arm/v7"]
+          context:
+            dockerhub
 
       - plugin-push:
           name: plugin-push-<< matrix.arch >>
@@ -68,3 +70,5 @@ workflows:
           filters:
             branches:
               only: master
+          context:
+            dockerhub
