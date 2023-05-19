@@ -5,7 +5,7 @@ RUN go mod vendor
 RUN go install --ldflags '-extldflags "-static"'
 CMD ["/go/bin/docker-volume-glusterfs"]
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 RUN apt-get update \
   && apt-get install software-properties-common -y \
   && add-apt-repository ppa:gluster/glusterfs-10 \
