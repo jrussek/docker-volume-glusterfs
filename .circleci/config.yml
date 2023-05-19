@@ -5,41 +5,66 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  build-images:
+  build-plugin:
+    parameters:
+      arch:
+        type: string
     docker:
       - image: cimg/base:stable
+        auth:
+          username: $DOCKERHUB_USRNAME
+          password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
       - checkout
       - run: docker buildx create --use --name "$CIRCLE_PROJECT_REPONAME"
-      - run: docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64 .
-  build-and-push:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
-      - checkout
-      - run: docker buildx create --use --name "$CIRCLE_PROJECT_REPONAME"
-      - run: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
-      - run: docker buildx build --push --tag "$DOCKERHUB_USERNAME/$CIRCLE_PROJECT_REPONAME":latest --platform linux/amd64,linux/arm/v7,linux/arm64 .
+      - run: docker buildx build --platform linux/<< parameters.arch >> --output ./plugin-<< parameters.arch >>/rootfs .
+      - run: cp ./config.json ./plugin-<< parameters.arch >>/
+      - persist_to_workspace:
+          root: plugin-<< parameters.arch >>
+          paths:
+            - rootfs
+            - config.json
 
+  plugin-push:
+    parameters:
+      arch:
+        type: string
+    docker:
+      - image: cimg/base:stable
+        auth:
+          username: $DOCKERHUB_USRNAME
+          password: $DOCKERHUB_ACCESS_TOKEN
+    steps:
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - checkout
+      - attach_workspace:
+          at: plugin-<< parameters.arch >>
+      - run: docker plugin create jorussek/glusterfs:<< parameters.arch >>-latest ./plugin-<< parameters.arch >>
+      - run: docker plugin push
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  docker_build:
+  plugins_build:
     jobs:
-      - build-images:
-          filters:
-            branches:
-              ignore: master
-      - build-and-push:
-          context: dockerhub
+      - build-plugin:
+          name: build-plugin-<< matrix.arch >>
+          matrix:
+            parameters:
+              arch: ["amd64", "arm64", "arm/v7"]
+
+      - plugin-push:
+          name: plugin-push-<< matrix.arch >>
+          matrix:
+            parameters:
+              arch: ["amd64", "arm64", "arm/v7"]
+          requires:
+            - build-plugin-<< matrix.arch >>
           filters:
             branches:
               only: master
-
