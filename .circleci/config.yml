@@ -44,6 +44,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: plugin-<< parameters.arch >>
+      - run: docker plugin rm --force jorussek/glusterfs:<< parameters.arch >>-latest || true
       - run: docker plugin create jorussek/glusterfs:<< parameters.arch >>-latest ./plugin-<< parameters.arch >>
       - run: docker plugin push jorussek/glusterfs:<< parameters.arch >>-latest
 
