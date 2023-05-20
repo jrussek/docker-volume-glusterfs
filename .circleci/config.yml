@@ -52,7 +52,7 @@ workflows:
           name: build-plugin-<< matrix.arch >>
           matrix:
             parameters:
-              arch: ["amd64", "arm64", "arm/v7"]
+              arch: ["amd64", "arm64", "arm"]
           context:
             dockerhub
 
@@ -60,7 +60,7 @@ workflows:
           name: plugin-push-<< matrix.arch >>
           matrix:
             parameters:
-              arch: ["amd64", "arm64", "arm/v7"]
+              arch: ["amd64", "arm64", "arm"]
           requires:
             - build-plugin-<< matrix.arch >>
           filters:
