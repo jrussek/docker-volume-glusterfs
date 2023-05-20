@@ -18,14 +18,14 @@ jobs:
       - checkout
       - run: docker buildx create --use --name "$CIRCLE_PROJECT_REPONAME"
       - restore_cache:
-        keys:
-          - buildx-<< parameters.arch >>
+          keys:
+            - buildx-<< parameters.arch >>
       - run: docker buildx build --cache-from "type=local,src=./.buildx" --cache-to "type=local,dest=./.buildx" --platform linux/<< parameters.arch >> --output ./plugin-<< parameters.arch >>/rootfs .
       - save_cache:
-        name: buildx cache
-        key: buildx-<< parameters.arch >>
-        paths:
-          - .buildx
+          name: buildx cache
+          key: buildx-<< parameters.arch >>
+          paths:
+            - .buildx
       - run: cp ./config.json ./plugin-<< parameters.arch >>/
       - persist_to_workspace:
           root: plugin-<< parameters.arch >>
