@@ -15,6 +15,5 @@ RUN apt-get update \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /go/bin/docker-volume-glusterfs /bin/
-ENTRYPOINT [ "tini","--" ]
-CMD ["docker-volume-glusterfs"]
+ENTRYPOINT [ "tini", "--", "docker-volume-glusterfs"]
 
