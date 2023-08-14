@@ -1,4 +1,4 @@
-FROM golang:1.20 as builder
+FROM golang:1.21 as builder
 COPY . /go/src/github.com/jrussek/docker-volume-glusterfs
 WORKDIR /go/src/github.com/jrussek/docker-volume-glusterfs
 RUN go mod vendor
