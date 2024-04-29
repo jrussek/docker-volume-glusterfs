@@ -5,7 +5,7 @@ RUN go mod vendor
 RUN go install --ldflags '-extldflags "-static"'
 CMD ["/go/bin/docker-volume-glusterfs"]
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 RUN apt-get update \
   && apt-get install tini software-properties-common -y \
   && add-apt-repository ppa:gluster/glusterfs-11 \
